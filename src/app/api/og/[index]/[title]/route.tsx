@@ -46,7 +46,15 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     ]);
     
     const logoBase64 = new URL('/logo.png', origin).toString();
-    const bgUrl = new URL('/images/card_bg.png', origin).toString();
+    
+    // Create a prompt based on the title for dynamic AI image generation
+    const cleanTitle = title.replace(/[^a-zA-Z0-9\s]/g, '').trim().substring(0, 100);
+    const imagePrompt = isCover 
+      ? `cinematic professional corporate business automation technology futuristic dark theme ${cleanTitle}` 
+      : `abstract dark technology background professional corporate theme related to ${cleanTitle}`;
+      
+    // Use pollinations.ai to generate a unique image related to the slide text
+    const bgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=1080&height=1350&nologo=true&seed=${indexStr}`;
 
     return new ImageResponse(
       (
