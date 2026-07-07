@@ -48,10 +48,11 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     const logoBase64 = new URL('/logo.png', origin).toString();
     
     // Create a prompt based on the title for dynamic AI image generation
+    // We prioritize the slide's text so the images look distinct, and just add stylistic modifiers at the end.
     const cleanTitle = title.replace(/[^a-zA-Z0-9\s]/g, '').trim().substring(0, 100);
     const imagePrompt = isCover 
-      ? `cinematic professional corporate business automation technology futuristic dark theme ${cleanTitle}` 
-      : `abstract dark technology background professional corporate theme related to ${cleanTitle}`;
+      ? `${cleanTitle}, high-tech corporate business automation, cinematic lighting, dark theme` 
+      : `Concept art representing: ${cleanTitle}, modern minimalist tech style, dark background`;
       
     // Use pollinations.ai to generate a unique image related to the slide text
     const bgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=1080&height=1350&nologo=true&seed=${indexStr}`;
