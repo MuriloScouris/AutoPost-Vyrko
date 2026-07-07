@@ -11,18 +11,16 @@ export async function GET(request: Request, context: { params: Promise<{ type: s
     const typeWithExt = params.type || 'engagement.png';
     const type = typeWithExt.replace('.png', '');
 
-    // Fetch logo and fonts in parallel for speed
-    const [logoResponse, fontRegularResponse, fontBoldResponse] = await Promise.all([
-      fetch(new URL('/logo.png', origin)),
+    // Fetch fonts in parallel
+    const [fontRegularResponse, fontBoldResponse] = await Promise.all([
       fetch(new URL('/fonts/Montserrat-Regular.ttf', origin)),
       fetch(new URL('/fonts/Montserrat-Bold.ttf', origin)),
     ]);
-    const [logoBuffer, fontRegularBuffer, fontBoldBuffer] = await Promise.all([
-      logoResponse.arrayBuffer(),
+    const [fontRegularBuffer, fontBoldBuffer] = await Promise.all([
       fontRegularResponse.arrayBuffer(),
       fontBoldResponse.arrayBuffer(),
     ]);
-    const logoBase64 = `data:image/png;base64,${Buffer.from(logoBuffer).toString('base64')}`;
+    const logoBase64 = new URL('/logo.png', origin).toString();
 
     let content = null;
 

@@ -35,24 +35,18 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     const firstWord = words[0];
     const restOfTitle = words.slice(1).join(' ');
 
-    // Fetch logo, fonts, and background in parallel for speed
-    const [logoResponse, fontRegularResponse, fontBoldResponse, bgResponse] = await Promise.all([
-      fetch(new URL('/logo.png', origin)),
+    // Fetch only fonts, Satori will fetch images directly
+    const [fontRegularResponse, fontBoldResponse] = await Promise.all([
       fetch(new URL('/fonts/Montserrat-Regular.ttf', origin)),
       fetch(new URL('/fonts/Montserrat-Bold.ttf', origin)),
-      fetch(new URL('/images/card_bg.png', origin)),
     ]);
-    const [logoBuffer, fontRegularBuffer, fontBoldBuffer, bgBuffer] = await Promise.all([
-      logoResponse.arrayBuffer(),
+    const [fontRegularBuffer, fontBoldBuffer] = await Promise.all([
       fontRegularResponse.arrayBuffer(),
       fontBoldResponse.arrayBuffer(),
-      bgResponse.arrayBuffer(),
     ]);
-    const logoBase64 = `data:image/png;base64,${Buffer.from(logoBuffer).toString('base64')}`;
-
-    // Using a local background image is much faster (instant) compared to generating via AI,
-    // which prevents the Facebook Meta crawler from timing out during the publish step.
-    const bgUrl = `data:image/png;base64,${Buffer.from(bgBuffer).toString('base64')}`;
+    
+    const logoBase64 = new URL('/logo.png', origin).toString();
+    const bgUrl = new URL('/images/card_bg.png', origin).toString();
 
     return new ImageResponse(
       (
