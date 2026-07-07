@@ -6,6 +6,16 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 import styles from './PostCard.module.css';
 
+// Safely encode string to base64url for URLs (browser compatible)
+const toBase64Url = (str: string) => {
+  try {
+    const base64 = btoa(unescape(encodeURIComponent(str)));
+    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  } catch (e) {
+    return encodeURIComponent(str);
+  }
+};
+
 interface PostCardProps {
   post: {
     id: string;
@@ -155,7 +165,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
             {parsedSlides.map((slide, index) => (
               <div key={index} style={{ flex: '0 0 auto', width: '250px', height: '250px', position: 'relative' }}>
                 <Image 
-                  src={`/api/og/${index}/${encodeURIComponent(slide)}.png`} 
+                  src={`/api/og/${index}/${toBase64Url(slide)}.png`} 
                   alt={`Slide ${index}`}
                   fill 
                   style={{ objectFit: 'cover', borderRadius: '8px' }} 

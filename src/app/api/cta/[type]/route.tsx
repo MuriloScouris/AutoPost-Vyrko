@@ -134,6 +134,7 @@ export async function GET(request: Request, context: { params: Promise<{ type: s
               </div>
 
             </div>
+          </div>
       );
     } else if (type === 'diagnostico') {
       content = (
