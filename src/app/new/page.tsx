@@ -6,6 +6,16 @@ import Image from 'next/image';
 import Sidebar from '@/components/Sidebar';
 import styles from './page.module.css';
 
+// Safely encode string to base64url for URLs (browser compatible)
+const toBase64Url = (str: string) => {
+  try {
+    const base64 = btoa(unescape(encodeURIComponent(str)));
+    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  } catch (e) {
+    return encodeURIComponent(str);
+  }
+};
+
 export default function NewPost() {
   const router = useRouter();
   const [theme, setTheme] = useState('');
@@ -237,7 +247,7 @@ export default function NewPost() {
                         {generatedPost.slides.map((slide, index) => (
                           <div key={index} style={{ flex: '0 0 auto', width: '300px', height: '300px', position: 'relative' }}>
                             <Image 
-                              src={`/api/og/${index}/${encodeURIComponent(slide)}.png`} 
+                              src={`/api/og/${index}/${toBase64Url(slide)}.png`} 
                               alt={`Slide ${index + 1}`} 
                               fill
                               style={{ objectFit: 'cover', borderRadius: '8px' }}

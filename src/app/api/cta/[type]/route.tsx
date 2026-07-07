@@ -134,6 +134,127 @@ export async function GET(request: Request, context: { params: Promise<{ type: s
               </div>
 
             </div>
+      );
+    } else if (type === 'diagnostico') {
+      content = (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#111',
+              padding: '120px 80px',
+              fontFamily: '"Montserrat"',
+              position: 'relative',
+              overflow: 'hidden',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '100px', backgroundColor: '#0a0a0a', padding: '16px 32px', borderRadius: '24px' }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#171717', marginRight: '24px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={logoBase64} width={40} height={40} alt="Vyrko" style={{ objectFit: 'contain' }} />
+              </div>
+              <div style={{ color: 'white', fontSize: '36px', fontWeight: 'bold' }}>Vyrko</div>
+            </div>
+
+            <div style={{ fontSize: '80px', fontWeight: 'bold', color: '#10b981', textAlign: 'center', marginBottom: '60px', lineHeight: 1.2 }}>
+              Diagnóstico Gratuito
+            </div>
+
+            <div style={{ fontSize: '40px', color: '#d1d5db', textAlign: 'center', lineHeight: 1.5, maxWidth: '85%', marginBottom: 'auto' }}>
+              Descubra como a automação pode reduzir custos e escalar o seu negócio de forma inteligente.
+            </div>
+
+            <div style={{ marginTop: '100px', marginBottom: '100px', backgroundColor: '#10b981', padding: '30px 60px', borderRadius: '50px', color: '#050505', fontSize: '42px', fontWeight: 'bold', boxShadow: '0 10px 40px rgba(16, 185, 129, 0.4)' }}>
+              Link na Bio 👆
+            </div>
+          </div>
+      );
+    } else if (type === 'dm') {
+      content = (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#111',
+              padding: '120px 80px',
+              fontFamily: '"Montserrat"',
+              position: 'relative',
+              overflow: 'hidden',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '100px', backgroundColor: '#0a0a0a', padding: '16px 32px', borderRadius: '24px' }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#171717', marginRight: '24px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={logoBase64} width={40} height={40} alt="Vyrko" style={{ objectFit: 'contain' }} />
+              </div>
+              <div style={{ color: 'white', fontSize: '36px', fontWeight: 'bold' }}>Vyrko</div>
+            </div>
+
+            <div style={{ fontSize: '80px', fontWeight: 'bold', color: '#ec4899', textAlign: 'center', marginBottom: '60px', lineHeight: 1.2 }}>
+              Ficou com alguma dúvida?
+            </div>
+
+            <div style={{ fontSize: '40px', color: '#d1d5db', textAlign: 'center', lineHeight: 1.5, maxWidth: '85%', marginBottom: 'auto' }}>
+              Mande uma mensagem no direct que a nossa equipe te explica tudo em detalhes!
+            </div>
+
+            <div style={{ marginTop: '100px', marginBottom: '100px', display: 'flex', alignItems: 'center', gap: '30px' }}>
+              <div style={{ color: '#ec4899', display: 'flex' }}>
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+              </div>
+              <span style={{ color: 'white', fontSize: '48px', fontWeight: 'bold' }}>Mande um Direct</span>
+            </div>
+          </div>
+      );
+    } else if (type === 'link_bio') {
+      content = (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#111',
+              padding: '120px 80px',
+              fontFamily: '"Montserrat"',
+              position: 'relative',
+              overflow: 'hidden',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '100px', backgroundColor: '#0a0a0a', padding: '16px 32px', borderRadius: '24px' }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: '16px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#171717', marginRight: '24px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={logoBase64} width={40} height={40} alt="Vyrko" style={{ objectFit: 'contain' }} />
+              </div>
+              <div style={{ color: 'white', fontSize: '36px', fontWeight: 'bold' }}>Vyrko</div>
+            </div>
+
+            <div style={{ fontSize: '80px', fontWeight: 'bold', color: '#3b82f6', textAlign: 'center', marginBottom: '60px', lineHeight: 1.2 }}>
+              Quer saber mais?
+            </div>
+
+            <div style={{ fontSize: '40px', color: '#d1d5db', textAlign: 'center', lineHeight: 1.5, maxWidth: '85%', marginBottom: 'auto' }}>
+              Acesse o link na nossa bio para conhecer mais sobre nossos serviços e portfólio.
+            </div>
+
+            <div style={{ marginTop: '100px', marginBottom: '100px', display: 'flex', alignItems: 'center', gap: '30px' }}>
+              <div style={{ color: '#3b82f6', display: 'flex' }}>
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </div>
+              <span style={{ color: 'white', fontSize: '48px', fontWeight: 'bold' }}>vyrko.com.br</span>
+            </div>
           </div>
       );
     } else {
