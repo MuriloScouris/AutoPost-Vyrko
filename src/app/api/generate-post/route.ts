@@ -71,21 +71,21 @@ PÚBLICO-ALVO: TÉCNICO (Desenvolvedores, CTOs, engenheiros de software)
 function buildCtaInstruction(ctaType: string, cta?: string): string {
   switch (ctaType) {
     case 'diagnostico':
-      return `\n5. No final da legenda, adicione um CTA convidando o leitor a agendar um DIAGNÓSTICO GRATUITO com a Vyrko. Ex: "Quer saber como aplicar isso no seu negócio? Agende um diagnóstico gratuito — link na bio 👆"`;
+      return `\n  3. Adicione um CTA convidando o leitor a agendar um DIAGNÓSTICO GRATUITO com a Vyrko. Ex: "Quer saber como aplicar isso no seu negócio? Agende um diagnóstico gratuito — link na bio 👆"`;
     case 'dm':
-      return `\n5. No final da legenda, adicione um CTA direcionando o leitor para enviar uma DM. Ex: "Manda um 'QUERO' no direct que a gente te explica como funciona 📩"`;
+      return `\n  3. Adicione um CTA direcionando o leitor para enviar uma DM. Ex: "Manda um 'QUERO' no direct que a gente te explica como funciona 📩"`;
     case 'link_bio':
-      return `\n5. No final da legenda, adicione um CTA direcionando para o link na bio (portfólio/formulário de contato). Ex: "Conheça nossos cases e solicite um orçamento — link na bio 🔗"`;
+      return `\n  3. Adicione um CTA direcionando para o link na bio (portfólio/formulário de contato). Ex: "Conheça nossos cases e solicite um orçamento — link na bio 🔗"`;
     case 'engagement':
-      return `\n5. No final da legenda, adicione uma chamada (CTA) engajadora pedindo para a pessoa curtir, comentar sua opinião ou salvar o post.`;
+      return `\n  3. Adicione uma chamada (CTA) engajadora pedindo para a pessoa curtir, comentar sua opinião ou salvar o post.`;
     case 'conversion':
-      return `\n5. No final da legenda, adicione uma chamada (CTA) forte direcionando a pessoa para clicar no Link da Bio e conhecer a Vyrko.`;
+      return `\n  3. Adicione uma chamada (CTA) forte direcionando a pessoa para clicar no Link da Bio e conhecer a Vyrko.`;
     case 'custom':
       return cta
-        ? `\n5. No final da legenda, adicione esta Chamada para Ação (CTA) exata: "${cta}"`
-        : '';
+        ? `\n  3. Adicione esta Chamada para Ação (CTA) exata: "${cta}"`
+        : `\n  3. Não adicione CTA.`;
     case 'none':
-      return `\n5. Não adicione nenhuma chamada para ação (CTA) no final.`;
+      return `\n  3. Não adicione nenhuma chamada para ação (CTA).`;
     default:
       return '';
   }
@@ -160,9 +160,9 @@ Retorne APENAS um objeto JSON válido (sem marcação Markdown em volta) com as 
 - "slides": Um array de strings, onde cada string é o texto de um slide do carrossel (max 10 a 15 palavras por slide).
 - "caption": A legenda do post. SIGA EXATAMENTE este formato:
   1. Comece com emojis relevantes (ex: 🚀, 💡, 🧠, etc).
-  2. Escreva um texto curto e envolvente de 2-3 frases sobre o tema (NÃO repita o conteúdo dos slides, traga contexto e curiosidade). Use emojis moderados.
-  3. Depois do texto, adicione uma separação visual com pontos em linhas separadas (use exatamente: \n.\n.\n.\n.\n.)
-  4. Depois dos pontos, coloque 5 a 8 hashtags relevantes (#Vyrko #MarketingDigital #AutomacaoDeProcessos etc).${ctaInstruction}
+  2. Escreva um texto curto e envolvente de 2-3 frases sobre o tema (NÃO repita o conteúdo dos slides, traga contexto e curiosidade). Use emojis moderados.${ctaInstruction}
+  4. Depois do texto e do CTA, adicione uma separação visual com pontos em linhas separadas (use exatamente: \n.\n.\n.\n.\n.)
+  5. Depois dos pontos, coloque 5 a 8 hashtags relevantes (#Vyrko #MarketingDigital #AutomacaoDeProcessos etc).
     `;
 
     // Inject parameters into custom prompt if provided, otherwise use default
