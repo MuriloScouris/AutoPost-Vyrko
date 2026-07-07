@@ -26,6 +26,7 @@ interface PostCardProps {
     slides?: string | null;
     ctaType?: string;
     status: string;
+    scheduledFor?: string | Date | null;
   };
   onDelete?: (id: string) => void;
 }
@@ -39,6 +40,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const getStatusClass = (status: string) => {
+    if (status === 'approved' && post.scheduledFor) return styles.statusApproved;
     switch (status) {
       case 'approved': return styles.statusApproved;
       case 'published': return styles.statusPublished;
@@ -47,6 +49,10 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
   };
 
   const getStatusText = (status: string) => {
+    if (status === 'approved' && post.scheduledFor) {
+      const date = new Date(post.scheduledFor);
+      return `📅 ${date.toLocaleDateString('pt-BR')} às ${date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
+    }
     switch (status) {
       case 'approved': return 'Aprovado (Na Fila)';
       case 'published': return 'Publicado ✓';

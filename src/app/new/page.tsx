@@ -25,6 +25,7 @@ export default function NewPost() {
   const [socialProof, setSocialProof] = useState('');
   const [ctaType, setCtaType] = useState('engagement');
   const [cta, setCta] = useState('');
+  const [scheduledFor, setScheduledFor] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +71,7 @@ export default function NewPost() {
       await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme, ...generatedPost })
+        body: JSON.stringify({ theme, scheduledFor: scheduledFor || null, ...generatedPost })
       });
       router.push('/');
     } catch (error) {
@@ -277,13 +278,34 @@ export default function NewPost() {
                   </div>
                 </div>
 
+                <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(0,0,0,0.3)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <label htmlFor="schedule" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>🗓️ Agendar publicação (Opcional):</label>
+                  <p style={{ fontSize: '0.85rem', color: '#a1a1aa', marginBottom: '1rem' }}>Se preenchido, o post será publicado automaticamente na data escolhida.</p>
+                  <input
+                    type="datetime-local"
+                    id="schedule"
+                    value={scheduledFor}
+                    onChange={(e) => setScheduledFor(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      border: '1px solid rgba(59, 130, 246, 0.3)',
+                      background: 'rgba(0, 0, 0, 0.5)',
+                      color: 'white',
+                      fontFamily: 'inherit',
+                      fontSize: '1rem'
+                    }}
+                  />
+                </div>
+
                 <button 
                   className="btn-primary" 
                   style={{ width: '100%', marginTop: '1rem', background: 'var(--success)' }}
                   onClick={handleSave}
                   disabled={isSaving}
                 >
-                  {isSaving ? 'Salvando...' : 'Salvar Rascunho na Fila'}
+                  {isSaving ? 'Salvando...' : scheduledFor ? 'Salvar e Agendar' : 'Salvar Rascunho na Fila'}
                 </button>
               </>
             )}

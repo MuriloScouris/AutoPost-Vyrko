@@ -16,8 +16,9 @@ export async function POST(request: Request) {
         caption: data.caption,
         imageUrl: null, // Não usamos mais imageUrl única para carrosséis
         slides: JSON.stringify(data.slides),
-        status: 'draft',
+        status: data.scheduledFor ? 'approved' : 'draft',
         ctaType: data.ctaType || 'engagement',
+        scheduledFor: data.scheduledFor ? new Date(data.scheduledFor) : null,
       }
     });
 
