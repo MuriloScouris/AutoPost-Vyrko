@@ -255,7 +255,17 @@ export default function NewPost() {
                             />
                           </div>
                         ))}
-
+                        {generatedPost.ctaType !== 'none' && (
+                          <div style={{ flex: '0 0 auto', width: '300px', height: '300px', position: 'relative' }}>
+                            <Image 
+                              src={`/api/cta/${generatedPost.ctaType || 'engagement'}.png?v=3`} 
+                              alt="CTA Slide" 
+                              fill
+                              style={{ objectFit: 'cover', borderRadius: '8px' }}
+                              unoptimized={true} 
+                            />
+                          </div>
+                        )}
                       </>
                     ) : (
                       <span>Gerando Imagem...</span>

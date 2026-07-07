@@ -173,7 +173,17 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
                 />
               </div>
             ))}
-
+            {post.ctaType !== 'none' && (
+              <div style={{ flex: '0 0 auto', width: '250px', height: '250px', position: 'relative' }}>
+                <Image 
+                  src={`/api/cta/${post.ctaType || 'engagement'}.png?v=3`} 
+                  alt="CTA Slide"
+                  fill 
+                  style={{ objectFit: 'cover', borderRadius: '8px' }} 
+                  unoptimized={true} 
+                />
+              </div>
+            )}
           </>
         ) : post.imageUrl ? (
           <div style={{ flex: '0 0 auto', width: '250px', height: '250px', position: 'relative' }}>
