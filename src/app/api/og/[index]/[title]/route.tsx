@@ -30,10 +30,29 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
       title = decodeURIComponent(titleRaw) || 'Vyrko Automations';
     }
     
-    // Split title for highlight effect (First word is highlighted, rest is white)
-    const words = title.split(' ');
-    const firstWord = words[0];
-    const restOfTitle = words.slice(1).join(' ');
+    // Inteligência para o destaque (azul) no título
+    let highlightedPart = '';
+    let restOfTitle = '';
+    
+    if (title.includes(':')) {
+      const parts = title.split(':');
+      highlightedPart = parts[0] + ':';
+      restOfTitle = parts.slice(1).join(':').trim();
+    } else if (title.includes('-')) {
+      const parts = title.split('-');
+      highlightedPart = parts[0] + '-';
+      restOfTitle = parts.slice(1).join('-').trim();
+    } else {
+      const words = title.split(' ');
+      // Se tiver mais de 3 palavras, destaca as duas primeiras, senão só a primeira
+      if (words.length >= 4) {
+        highlightedPart = words.slice(0, 2).join(' ');
+        restOfTitle = words.slice(2).join(' ');
+      } else {
+        highlightedPart = words[0] || '';
+        restOfTitle = words.slice(1).join(' ');
+      }
+    }
 
     // Fetch only fonts, Satori will fetch images directly
     const [fontRegularResponse, fontBoldResponse] = await Promise.all([
@@ -162,7 +181,7 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
                     marginBottom: 'auto',
                   }}
                 >
-                  <span style={{ color: '#3b82f6', marginRight: '24px' }}>{firstWord}</span>
+                  <span style={{ color: '#3b82f6', marginRight: '24px' }}>{highlightedPart}</span>
                   <span>{restOfTitle}</span>
                 </div>
 
@@ -262,7 +281,7 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
                   letterSpacing: '-1px',
                 }}
               >
-                <span style={{ color: '#3b82f6', marginRight: '16px' }}>{firstWord}</span>
+                <span style={{ color: '#3b82f6', marginRight: '16px' }}>{highlightedPart}</span>
                 <span>{restOfTitle}</span>
               </div>
 
