@@ -17,12 +17,12 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
       titleRaw = titleRaw.slice(0, -4);
     }
     
-    // Tentar decodificar de base64url (novo formato seguro). Fazemos fallback para decodeURIComponent para compatibilidade com posts antigos.
+    // Tentar decodificar de base64url (novo formato seguro).
     let title = 'Vyrko Automations';
     try {
-      // Se não tiver espaço nem %, assumimos que é base64url
       if (!titleRaw.includes('%') && !titleRaw.includes(' ')) {
-        title = Buffer.from(titleRaw, 'base64url').toString('utf-8');
+        const base64 = titleRaw.replace(/-/g, '+').replace(/_/g, '/');
+        title = decodeURIComponent(escape(atob(base64)));
       } else {
         title = decodeURIComponent(titleRaw);
       }
@@ -96,9 +96,17 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
                   left: 0, 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'cover',
-                  opacity: 0.35 
                 }} 
+              />
+              <div
+                style={{
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  backgroundColor: 'rgba(5, 5, 5, 0.65)'
+                }}
               />
               
               <div
@@ -270,7 +278,7 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={bgUrl} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={bgUrl} style={{ width: '100%', height: '100%' }} />
               </div>
 
               {/* Footer */}

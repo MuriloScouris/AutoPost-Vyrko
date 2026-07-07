@@ -61,11 +61,7 @@ export async function POST(request: Request) {
         const safeTitle = Buffer.from(slide).toString('base64url');
         return `${baseUrl}/api/og/${index}/${safeTitle}.png`;
       });
-    // Adicionar o slide CTA no final
-    const ctaType = post.ctaType || 'engagement';
-    if (ctaType !== 'none') {
-      imageUrls.push(`${baseUrl}/api/cta/${ctaType}.png`);
-    }
+
 
     // Verificação de ambiente local
     if (baseUrl.includes('localhost')) {
