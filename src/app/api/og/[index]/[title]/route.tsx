@@ -80,6 +80,17 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     // Use pollinations.ai to generate a unique image related to the slide text
     const bgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=1080&height=1350&nologo=true&seed=${indexStr}`;
 
+    // Calculate dynamic font sizes based on text length to prevent overflow
+    const titleLength = title.length;
+    let coverFontSize = '110px';
+    if (titleLength > 90) coverFontSize = '70px';
+    else if (titleLength > 60) coverFontSize = '85px';
+    else if (titleLength > 35) coverFontSize = '95px';
+
+    let contentFontSize = '68px';
+    if (titleLength > 80) contentFontSize = '48px';
+    else if (titleLength > 45) contentFontSize = '56px';
+
     return new ImageResponse(
       (
         <div
@@ -171,7 +182,7 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
                 {/* Huge Centered Title */}
                 <div
                   style={{
-                    fontSize: '110px',
+                    fontSize: coverFontSize,
                     fontWeight: 700,
                     color: 'white',
                     lineHeight: 1.1,
@@ -275,7 +286,7 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
               {/* Title */}
               <div
                 style={{
-                  fontSize: '68px',
+                  fontSize: contentFontSize,
                   fontWeight: 700,
                   color: 'white',
                   lineHeight: 1.2,
