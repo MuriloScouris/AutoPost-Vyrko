@@ -34,7 +34,11 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     let highlightedPart = '';
     let restOfTitle = '';
     
-    if (title.includes(':')) {
+    if (title.includes('?')) {
+      const parts = title.split('?');
+      highlightedPart = parts[0] + '?';
+      restOfTitle = parts.slice(1).join('?').trim();
+    } else if (title.includes(':')) {
       const parts = title.split(':');
       highlightedPart = parts[0] + ':';
       restOfTitle = parts.slice(1).join(':').trim();
