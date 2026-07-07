@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
   --bg-base: #050505;
@@ -14,7 +14,7 @@
   --danger: #ef4444;
   --success: #10b981;
   --radius: 12px;
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
   --shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.5);
   --glass-blur: blur(12px);
 }
@@ -100,7 +100,5 @@ input, textarea, select {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #fff, #9ca3af);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #e5e7eb;
 }
