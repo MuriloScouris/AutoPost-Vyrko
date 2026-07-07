@@ -34,18 +34,16 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     let highlightedPart = '';
     let restOfTitle = '';
     
-    if (title.includes('?')) {
-      const parts = title.split('?');
-      highlightedPart = parts[0] + '?';
-      restOfTitle = parts.slice(1).join('?').trim();
-    } else if (title.includes(':')) {
-      const parts = title.split(':');
-      highlightedPart = parts[0] + ':';
-      restOfTitle = parts.slice(1).join(':').trim();
-    } else if (title.includes('-')) {
-      const parts = title.split('-');
-      highlightedPart = parts[0] + '-';
-      restOfTitle = parts.slice(1).join('-').trim();
+    const colonIdx = title.indexOf(':');
+    const questionIdx = title.indexOf('?');
+    const dashIdx = title.indexOf('-');
+
+    const indices = [colonIdx, questionIdx, dashIdx].filter(idx => idx !== -1);
+    
+    if (indices.length > 0) {
+      const firstPunctuationIdx = Math.min(...indices);
+      highlightedPart = title.substring(0, firstPunctuationIdx + 1);
+      restOfTitle = title.substring(firstPunctuationIdx + 1).trim();
     } else {
       const words = title.split(' ');
       // Se tiver mais de 3 palavras, destaca as duas primeiras, senão só a primeira
