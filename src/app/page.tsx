@@ -1,65 +1,64 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
+import PostCard from '@/components/PostCard';
+import DashboardFilters from '@/components/DashboardFilters';
+import prisma from '@/lib/prisma';
+import styles from './page.module.css';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Dashboard() {
+  const posts = await prisma.post.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+
+  const stats = {
+    total: posts.length,
+    drafts: posts.filter(p => p.status === 'draft').length,
+    published: posts.filter(p => p.status === 'published').length,
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className={styles.dashboard}>
+      <Sidebar />
+      <main className={styles.mainContent}>
+        <header className={styles.header}>
+          <div>
+            <h1>Fila de Posts</h1>
+            <p>Aprove, edite ou agende o conteúdo gerado pela IA.</p>
+          </div>
+          <Link href="/new" className="btn-primary">
+            + Gerar Novo Post
+          </Link>
+        </header>
+
+        {/* Stats Cards */}
+        <div className={styles.statsRow}>
+          <div className={`glass-panel ${styles.statCard}`}>
+            <span className={styles.statNumber}>{stats.total}</span>
+            <span className={styles.statLabel}>Total</span>
+          </div>
+          <div className={`glass-panel ${styles.statCard} ${styles.statDraft}`}>
+            <span className={styles.statNumber}>{stats.drafts}</span>
+            <span className={styles.statLabel}>Rascunhos</span>
+          </div>
+          <div className={`glass-panel ${styles.statCard} ${styles.statPublished}`}>
+            <span className={styles.statNumber}>{stats.published}</span>
+            <span className={styles.statLabel}>Publicados</span>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {posts.length === 0 ? (
+          <div className={`glass-panel ${styles.emptyState}`}>
+            <h2>Nenhum post na fila</h2>
+            <p>Sua fila está vazia. Comece gerando um novo post sobre tecnologia, automação ou IA para sua audiência.</p>
+            <Link href="/new" className="btn-primary" style={{ marginTop: '1rem' }}>
+              Gerar Primeiro Post
+            </Link>
+          </div>
+        ) : (
+          <DashboardFilters posts={JSON.parse(JSON.stringify(posts))} />
+        )}
       </main>
     </div>
   );
