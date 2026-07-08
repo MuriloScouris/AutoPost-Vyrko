@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import Sidebar from '@/components/Sidebar';
 import styles from './page.module.css';
 
 export default function Settings() {
@@ -58,9 +57,7 @@ export default function Settings() {
   const hasInstagramToken = !!settings.igToken;
 
   return (
-    <div className={styles.container}>
-      <Sidebar />
-      <main className={styles.mainContent}>
+    <main className={styles.mainContent}>
         <header className={styles.header}>
           <div>
             <h1>Configurações</h1>
@@ -184,7 +181,6 @@ export default function Settings() {
             <small style={{ color: 'var(--text-muted)' }}>As cores serão salvas nas preferências.</small>
           </div>
         </div>
-      </main>
-    </div>
+    </main>
   );
 }

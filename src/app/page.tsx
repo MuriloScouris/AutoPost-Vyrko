@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
 import PostCard from '@/components/PostCard';
 import DashboardFilters from '@/components/DashboardFilters';
 import prisma from '@/lib/prisma';
@@ -19,9 +18,7 @@ export default async function Dashboard() {
   };
 
   return (
-    <div className={styles.dashboard}>
-      <Sidebar />
-      <main className={styles.mainContent}>
+    <main className={styles.mainContent}>
         <header className={styles.header}>
           <div>
             <h1>Fila de Posts</h1>
@@ -59,7 +56,6 @@ export default async function Dashboard() {
         ) : (
           <DashboardFilters posts={JSON.parse(JSON.stringify(posts))} />
         )}
-      </main>
-    </div>
+    </main>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from 'sonner';
+import { Toaster } from 'sonner';
+import Sidebar from '@/components/Sidebar';
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        {children}
+        <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
+          <Sidebar />
+          {children}
+        </div>
         <Toaster
           theme="dark"
           position="top-right"

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Sidebar from '@/components/Sidebar';
 import styles from './page.module.css';
 
 // Safely encode string to base64url for URLs (browser compatible)
@@ -83,9 +82,7 @@ export default function NewPost() {
   };
 
   return (
-    <div className={styles.container}>
-      <Sidebar />
-      <main className={styles.mainContent}>
+    <main className={styles.mainContent}>
         <header className={styles.header}>
           <div>
             <h1>Novo Post Assistido por IA</h1>
@@ -311,7 +308,6 @@ export default function NewPost() {
             )}
           </div>
         </div>
-      </main>
-    </div>
+    </main>
   );
 }
