@@ -7,15 +7,20 @@ export async function PUT(
 ) {
   try {
     const { id } = await params;
-    const { caption } = await request.json();
+    const { caption, status, scheduledFor } = await request.json();
 
-    if (!caption) {
-      return NextResponse.json({ error: 'Legenda é obrigatória' }, { status: 400 });
+    if (caption === undefined && !status) {
+      return NextResponse.json({ error: 'Nenhum dado para atualizar' }, { status: 400 });
     }
+
+    const dataToUpdate: any = {};
+    if (caption !== undefined) dataToUpdate.caption = caption;
+    if (status !== undefined) dataToUpdate.status = status;
+    if (scheduledFor !== undefined) dataToUpdate.scheduledFor = scheduledFor;
 
     const updatedPost = await prisma.post.update({
       where: { id },
-      data: { caption }
+      data: dataToUpdate
     });
 
     return NextResponse.json(updatedPost);

@@ -38,6 +38,8 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isScheduling, setIsScheduling] = useState(false);
+  const [scheduleDate, setScheduleDate] = useState('');
 
   const getStatusClass = (status: string) => {
     if (status === 'approved' && post.scheduledFor) return styles.statusApproved;
@@ -75,6 +77,45 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
     } catch (err) {
       console.error(err);
       toast.error('Erro ao salvar edição.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleSchedule = async () => {
+    if (!scheduleDate) {
+      toast.error('Selecione uma data e hora para agendar.');
+      return;
+    }
+
+    setIsSaving(true);
+    const toastId = toast.loading('Agendando post...');
+    
+    try {
+      // Garantir formato ISO
+      const isoDate = new Date(scheduleDate).toISOString();
+
+      const res = await fetch(`/api/posts/${post.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          status: 'approved',
+          scheduledFor: isoDate
+        })
+      });
+      
+      const data = await res.json();
+      
+      if (!res.ok) {
+        toast.error(`Erro: ${data.error}`, { id: toastId });
+      } else {
+        toast.success('Post agendado com sucesso! 🕒', { id: toastId });
+        setIsScheduling(false);
+        router.refresh();
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error('Erro de rede ao agendar.', { id: toastId });
     } finally {
       setIsSaving(false);
     }
@@ -255,20 +296,61 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
             {isDeleting ? '...' : '🗑'}
           </button>
 
-          {!isEditing && post.status === 'draft' && (
+          {!isEditing && !isScheduling && post.status === 'draft' && (
             <button className={styles.actionBtn} onClick={() => setIsEditing(true)}>
               Editar
             </button>
           )}
           
-          {post.status === 'draft' && (
-            <button 
-              className={`${styles.actionBtn} btn-primary`}
-              onClick={handlePublish}
-              disabled={isPublishing}
-            >
-              {isPublishing ? 'Publicando...' : 'Publicar'}
-            </button>
+          {post.status === 'draft' && !isScheduling && (
+            <>
+              <button 
+                className={styles.actionBtn}
+                onClick={() => setIsScheduling(true)}
+              >
+                Agendar
+              </button>
+              <button 
+                className={`${styles.actionBtn} btn-primary`}
+                onClick={handlePublish}
+                disabled={isPublishing}
+              >
+                {isPublishing ? 'Publicando...' : 'Publicar'}
+              </button>
+            </>
+          )}
+
+          {isScheduling && (
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <input 
+                type="datetime-local" 
+                value={scheduleDate}
+                onChange={(e) => setScheduleDate(e.target.value)}
+                style={{
+                  background: 'rgba(0,0,0,0.5)',
+                  color: 'white',
+                  border: '1px solid var(--border)',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  fontSize: '12px'
+                }}
+              />
+              <button 
+                className={`${styles.actionBtn} btn-primary`}
+                onClick={handleSchedule}
+                disabled={isSaving}
+                style={{ padding: '4px 8px', fontSize: '12px' }}
+              >
+                OK
+              </button>
+              <button 
+                className={styles.actionBtn}
+                onClick={() => setIsScheduling(false)}
+                style={{ padding: '4px 8px', fontSize: '12px' }}
+              >
+                X
+              </button>
+            </div>
           )}
         </div>
       </div>
