@@ -1,0 +1,92 @@
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  background: linear-gradient(to right, #ffffff, #a1a1aa);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.calendarContainer {
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.calendarTitle {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendarHeaderDay {
+  text-align: center;
+  font-weight: bold;
+  color: #a1a1aa;
+  padding-bottom: 10px;
+}
+
+.calendarDay {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.calendarDayEmpty {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.calendarDayActive {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.calendarDayNumber {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.postItem {
+  margin-top: 4px;
+  background: #3b82f6;
+  color: white;
+  font-size: 10px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}

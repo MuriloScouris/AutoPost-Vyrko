@@ -59,7 +59,7 @@ export async function POST(request: Request) {
       .map((slide, index) => {
         // Usar base64url garante que caracteres especiais (como barras) não quebrem a rota do Next.js
         const safeTitle = Buffer.from(slide).toString('base64url');
-        return `${baseUrl}/api/og/${index}/${safeTitle}.png`;
+        return `${baseUrl}/api/og?index=${index}&title=${safeTitle}`;
       });
 
     // Adicionar o slide CTA no final

@@ -248,7 +248,7 @@ export default function NewPost() {
                         {generatedPost.slides.map((slide, index) => (
                           <div key={index} style={{ flex: '0 0 auto', width: '300px', height: '300px', position: 'relative' }}>
                             <Image 
-                              src={`/api/og/${index}/${toBase64Url(slide)}.png`} 
+                              src={`/api/og?index=${index}&title=${toBase64Url(slide)}`} 
                               alt={`Slide ${index + 1}`} 
                               fill
                               style={{ objectFit: 'cover', borderRadius: '8px' }}

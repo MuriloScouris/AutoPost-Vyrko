@@ -4,15 +4,14 @@ export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function GET(request: Request, props: { params: Promise<{ index: string, title: string }> }) {
+export async function GET(request: Request) {
   try {
-    const { origin } = new URL(request.url);
-    const resolvedParams = await props.params;
+    const { origin, searchParams } = new URL(request.url);
     
-    const indexStr = resolvedParams.index;
+    const indexStr = searchParams.get('index') || '0';
     const isCover = indexStr === '0';
     
-    let titleRaw = resolvedParams.title;
+    let titleRaw = searchParams.get('title') || 'Vyrko Automations';
     if (titleRaw.endsWith('.png')) {
       titleRaw = titleRaw.slice(0, -4);
     }
@@ -379,4 +378,3 @@ export async function GET(request: Request, props: { params: Promise<{ index: st
     return new Response('Failed to generate image', { status: 500 });
   }
 }
-

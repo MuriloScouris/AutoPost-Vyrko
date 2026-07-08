@@ -171,7 +171,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
             {parsedSlides.map((slide, index) => (
               <div key={index} style={{ flex: '0 0 auto', width: '250px', height: '250px', position: 'relative' }}>
                 <Image 
-                  src={`/api/og/${index}/${toBase64Url(slide)}.png`} 
+                  src={`/api/og?index=${index}&title=${toBase64Url(slide)}`}
                   alt={`Slide ${index}`}
                   fill 
                   style={{ objectFit: 'cover', borderRadius: '8px' }} 
