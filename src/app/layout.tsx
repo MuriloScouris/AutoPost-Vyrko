@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Toaster } from 'sonner';
-import { Toaster } from 'sonner';
 import Sidebar from '@/components/Sidebar';
 import "./globals.css";
 
